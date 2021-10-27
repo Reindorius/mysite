@@ -13,6 +13,12 @@ class Player(models.Model):
     def __str__(self) -> str:
         return self.firstName + " " + self.lastName
 
+    def getFirstName(self) -> str:
+        return self.firstName
+
+    def getLastName(self) -> str:
+        return self.lastName
+
 
 
 class Role(models.Model):
@@ -33,6 +39,9 @@ class Role(models.Model):
 
     name = models.TextField(max_length=63)
 
+    def __str__(self) -> str:
+        return self.type + ' \"' + self.name + '\"'
+
 
 
 class PlayerData(models.Model):
@@ -40,3 +49,7 @@ class PlayerData(models.Model):
     role = models.ForeignKey(Role, on_delete=models.CASCADE)
 
     date_updated = models.DateField()
+
+    def __str__(self) -> str:
+        return self.player.getFirstName() + ' \"' + self.role.type + '\" ' + self.player.getLastName() + ' (' + \
+            self.player.id.__str__() + '|' + self.role.id.__str__() + ')'
